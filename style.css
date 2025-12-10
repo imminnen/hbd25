@@ -1,87 +1,170 @@
+:root {
+  --bg: #0a0d2e; 
+  --glass: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.15);
+  --primary: #ff0055;
+}
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    cursor: none;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(-45deg, #fee9f7, #e8f5fe, #fef2e8, #f0ffe8);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
-    overflow: hidden;
-    position: relative;
+  margin: 0;
+  background: var(--bg);
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  overflow-x: hidden;
+  overflow-y: auto; 
+  -webkit-overflow-scrolling: touch; 
 }
 
-.cursor {
-    width: 20px;
-    height: 20px;
-    background: pink;
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    mix-blend-mode: difference;
-    transition: transform 0.2s;
+/* --- Long Container Layout --- */
+.long-page {
+  position: relative;
+  width: 100%;
+  /* CHANGED: 200vh = 2 full screen heights. 
+     Screen 1 = Timer. Screen 2 = Tree & Button. */
+  min-height: 200vh; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  opacity: 0; 
+  transition: opacity 1.5s ease;
 }
 
-.container {
-    text-align: center;
-    z-index: 1;
+.long-page.show { opacity: 1; }
+
+/* --- Canvas Positioning --- */
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; 
+  pointer-events: none;
+}
+
+/* --- Intro --- */
+#intro {
+  position: fixed; inset: 0; background: #000; z-index: 999;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity 0.8s;
+}
+.hidden { opacity: 0; pointer-events: none; }
+
+.btn {
+  font-size: 80px; cursor: pointer;
+  filter: drop-shadow(0 0 30px #ff0055);
+  animation: pulse-heart 1s infinite;
+}
+.intro-text {
+  margin-top: 20px; letter-spacing: 4px; font-size: 12px; opacity: 0.7;
+}
+@keyframes pulse-heart { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+
+/* --- Top Banner Section --- */
+.banner-section {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  /* CHANGED: Takes up the full initial screen height */
+  height: 100vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Vertically centers the timer */
+}
+
+.card {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 25px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  text-align: center;
+  /* Slight offset up so it looks centered nicely */
+  transform: translateY(-50px); 
 }
 
 h1 {
-    font-size: 3.5rem;
-    color: #ff69b4;
-    text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
-    margin-bottom: 2rem;
-    opacity: 0;
+  font-size: clamp(24px, 6vw, 32px);
+  line-height: 1.2; margin: 0 0 10px 0;
+  background: linear-gradient(to right, #ff9a9e, #fecfef);
+  background-clip: text;
+  -webkit-background-clip: text; color: transparent;
+}
+.subtitle { font-size: 12px; opacity: 0.8; margin: 0; }
+
+/* --- Timer Styling --- */
+.timer { 
+  margin-top: 20px; 
+  display: grid; 
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 8px; 
 }
 
-.greeting {
-    font-size: 1.5rem;
-    color: #8a2be2;
-    margin-bottom: 3rem;
-    min-height: 2em;
+.t-box { 
+  background: rgba(255,255,255,0.05); 
+  padding: 8px 4px; 
+  border-radius: 8px; 
 }
 
-.cta-button {
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    background: linear-gradient(45deg, #ff69b4, #ff99cc);
-    border: none;
-    border-radius: 50px;
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
-    transition: transform 0.3s, box-shadow 0.3s;
-    opacity: 0;
+.val { 
+  font-size: clamp(16px, 5vw, 22px); 
+  font-weight: 700; display: block; height: 1.2em;
 }
 
-.cta-button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 25px rgba(255, 105, 180, 0.7);
+.pulse {
+  display: inline-block;
+  animation: digital-pulse 0.4s ease-out;
+}
+@keyframes digital-pulse { 
+  0% { transform: scale(1.0); opacity: 0.5; }
+  50% { transform: scale(1.3); opacity: 1.0; }
+  100% { transform: scale(1.0); opacity: 1.0; }
 }
 
-.floating {
-    position: absolute;
-    pointer-events: none;
-    opacity: 0;
+.lbl { font-size: 9px; opacity: 0.6; text-transform: uppercase; margin-top: 4px; display: block;}
+
+/* --- Bottom Footer Section --- */
+.footer-section {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 80px; 
 }
 
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+.celebrate-btn {
+  background: linear-gradient(45deg, #ff0055, #ff0080);
+  border: none;
+  padding: 16px 32px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(255, 0, 85, 0.4);
+  transition: transform 0.2s;
+  animation: float-btn 3s ease-in-out infinite;
+  user-select: none; 
+  width: 80%;
+  max-width: 300px;
 }
 
-@media (max-width: 768px) {
-    h1 { font-size: 2rem; }
-    .greeting { font-size: 1.2rem; }
-    .cta-button { font-size: 1rem; }
+@keyframes float-btn {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.celebrate-btn:active {
+  transform: scale(0.95);
 }
