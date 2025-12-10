@@ -1,23 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Happy Birthday!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    
 </head>
 <body>
-    <div class="cursor"></div>
-    <div class="container">
-        <h1>Happiest Birthday Piuu💗</h1>
-        <div class="greeting"></div>
-        <button class="cta-button">Click to Enter Our World 💕</button>
+
+  <div id="intro">
+    <div class="btn" id="start">❤️</div>
+    <div class="intro-text">TAP TO BLOOM</div>
+  </div>
+
+  <div class="long-page" id="mainContainer">
+    
+    <div class="banner-section">
+      <div class="card">
+        <h1>Happy Birthday<br>My Love</h1>
+        <p class="subtitle">The world just got luckier since</p>
+        
+        <div class="timer">
+          <div class="t-box"><span class="val" id="d">0</span><span class="lbl">Days</span></div>
+          <div class="t-box"><span class="val" id="h">00</span><span class="lbl">Hrs</span></div>
+          <div class="t-box"><span class="val" id="m">00</span><span class="lbl">Mins</span></div>
+          <div class="t-box"><span class="val" id="s">00</span><span class="lbl">Secs</span></div>
+        </div>
+      </div>
     </div>
 
-    <script src="script.js">
-        
-    </script>
+    <canvas id="c"></canvas>
+
+    <div class="footer-section">
+      <button class="celebrate-btn" onclick="triggerCelebration()">
+        Let's Celebrate ✨
+      </button>
+    </div>
+
+  </div>
+
+<script src="script.js"></script>
 </body>
 </html>
