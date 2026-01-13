@@ -1,0 +1,158 @@
+:root {
+    --bg-color: #0a0d2e;
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --primary: #ff0055;
+    --success: #2ecc71; /* Green */
+    --error: #e74c3c;   /* Red */
+    --text: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: var(--bg-color);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Moving gradient background effect */
+body::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, #ff005522 10%, transparent 40%),
+                radial-gradient(circle, #26ccff22 10%, transparent 40%);
+    background-size: 50% 50%;
+    animation: moveBg 15s linear infinite;
+    z-index: -1;
+}
+
+@keyframes moveBg {
+    0% { transform: translate(-20%, -20%) rotate(0deg); }
+    100% { transform: translate(-20%, -20%) rotate(360deg); }
+}
+
+.container {
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.quiz-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.quiz-card:hover {
+    transform: translateY(-5px);
+}
+
+.icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+h2 {
+    color: var(--text);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.question {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.option-btn {
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.option-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.02);
+}
+
+/* Correct Answer Style */
+.option-btn.correct {
+    background: var(--success);
+    border-color: var(--success);
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 0 15px var(--success);
+}
+
+/* Wrong Answer Style */
+.option-btn.wrong {
+    background: var(--error);
+    border-color: var(--error);
+    color: white;
+    animation: shake 0.4s ease-in-out;
+}
+
+/* Shake Animation for wrong answers */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+#message {
+    margin-top: 20px;
+    height: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+@media (hover: none) {
+    .option-btn:hover {
+        transform: none;
+        background: rgba(255, 255, 255, 0.05); /* Reset to default */
+    }
+    
+    .option-btn:active {
+        background: rgba(255, 255, 255, 0.3); /* Immediate feedback on tap */
+        transform: scale(0.98);
+    }
+}
